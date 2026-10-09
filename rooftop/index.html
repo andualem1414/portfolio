@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rooftop · Andualem Mamo</title>
+  <meta name="description" content="Rooftop is a 3D browser brawler built with three.js: twenty floors, rising platforms, and only the first one onto the roof wins.">
+  <meta property="og:title" content="Rooftop">
+  <meta property="og:description" content="A 3D browser brawler. Twenty floors, rising platforms, first onto the roof wins.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="/images/rooftop/title.webp">
+  <meta name="theme-color" content="#151515">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <a class="back" href="/">Andualem Mamo</a>
+
+    <header class="project-head">
+      <h1>Rooftop</h1>
+      <p class="lede">A 3D brawler that runs in the browser. Twenty floors, platforms grinding up the shaft, and one way out: the roof. Only the first one up there wins.</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Year</dt><dd>2026</dd></div>
+      <div><dt>Role</dt><dd>Solo: design, code, sound</dd></div>
+      <div><dt>Built with</dt><dd>three.js, Rapier, Supabase</dd></div>
+      <div><dt>Play</dt><dd><a href="https://imaginatingg.itch.io/rooftop" target="_blank" rel="noopener">itch.io</a></dd></div>
+    </dl>
+
+    <figure class="wide">
+      <button type="button" data-full="/images/rooftop/title.webp" aria-label="View the title screen full size">
+        <img src="/images/rooftop/title.webp" width="1800" height="1012" alt="The Rooftop title, drawn in chalk letters over a concrete tower at night with mountains and a full moon behind it.">
+      </button>
+      <figcaption>The title screen. The opening shot flies up the tower while the music builds.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <h2>The idea</h2>
+      <p>Every round starts with a crowd of climbers spread across the floors of a concrete tower at night. A platform rides up the shaft, stopping at each floor. Step on and it carries you one floor higher; stay too long and someone with a hammer decides you're getting off. The hatch to the roof opens at 4:00, and the first climber through it wins the round. Then there's a skydive back down through a trail of rings.</p>
+      <p>I wanted something you understand in the first ten seconds and can finish in a coffee break. The whole game fits in one sentence: first onto the roof wins.</p>
+
+      <figure class="wide">
+        <button type="button" data-full="/images/rooftop/fight.webp" aria-label="View the fight screenshot full size">
+          <img src="/images/rooftop/fight.webp" width="1800" height="1012" alt="Top-down view of a tower floor. The player in a yellow jacket swings a hammer at a bot while two more climbers wait at the platform shaft." loading="lazy">
+        </button>
+        <figcaption>A fight next to the shaft. Moonlight through the windows marks where the weapons lie.</figcaption>
+      </figure>
+
+      <h2>Combat</h2>
+      <p>Each floor has weapons lying around: knife, sword, spear, bat, axe and hammer. They each have their own wind-up, reach and weight. The hammer breaks a guard. The sword hits everyone in front of you, which matters when a crowd gathers at the shaft.</p>
+      <p>To balance them I didn't trust my own play. I wrote a simulator that runs 288 bot-against-bot duels per test, every weapon against every other. The first results were lopsided: the hammer won 75% of duels and the sword only 29%. I tried tuning damage and stagger, and nothing moved beyond noise. The gap was in the mechanics, not the numbers: the hammer's long stagger stops the other side from swinging back, and the sword's strength never shows up in a one-on-one. That changed how I think about balancing: measure first, then change rules instead of numbers.</p>
+      <p>The bots fight each other too, not just you. They jump the way you do, hop over crates or walk around them depending on their habits, and the skilled ones jump over a low swing they see coming.</p>
+
+      <div class="pair">
+        <figure>
+          <button type="button" data-full="/images/rooftop/floor.webp" aria-label="View the floor screenshot full size">
+            <img src="/images/rooftop/floor.webp" width="1800" height="1012" alt="Bird's-eye view of a single floor with crates, a low wall and the open shaft in the middle." loading="lazy">
+          </button>
+        </figure>
+        <figure>
+          <button type="button" data-full="/images/rooftop/skydive.webp" aria-label="View the skydive screenshot full size">
+            <img src="/images/rooftop/skydive.webp" width="1800" height="1012" alt="The winner skydiving towards a glowing yellow ring above a dark pine forest, with a line of rings leading away." loading="lazy">
+          </button>
+        </figure>
+      </div>
+
+      <h2>Look and sound</h2>
+      <p>The art direction is hand-drawn: chalky outlines, scratched glass, film grain and a cold night palette, so the warm yellow of the player's jacket always reads first.</p>
+      <p>Almost every sound effect is made in code instead of loaded from files. Wind that gets stronger on the high floors, the clunk and winch groan of the platform, the grinding roof hatch, a different whoosh for each weapon, a dull smack with weight behind it on a hit. They're all pitched to sit under the soundtrack, and re-levelled so they still come through laptop speakers. The music is cued so its big hit lands exactly as the opening shot reaches the roof, even if you skip ahead.</p>
+
+      <h2>Made for the browser</h2>
+      <ul>
+        <li><strong>Fast first frame.</strong> A loading screen appears before any code arrives. The first frame needs about 225 kB; the physics engine (760 kB of WebAssembly) and the music load in the background during the opening shot.</li>
+        <li><strong>Runs on weak machines.</strong> Graphics quality adapts to the GPU on its own, with manual low, medium and high settings.</li>
+        <li><strong>Plays well inside an iframe.</strong> itch.io embeds the game in its page, so the game takes keyboard focus, stops the page from scrolling under Space and the arrow keys, pauses when you switch away and offers a fullscreen button.</li>
+        <li><strong>Learns as you go.</strong> Tips appear one at a time, only when they become useful, and never twice. Every key can be rebound.</li>
+      </ul>
+
+      <figure class="wide">
+        <button type="button" data-full="/images/rooftop/roof.webp" aria-label="View the roof screenshot full size">
+          <img src="/images/rooftop/roof.webp" width="1800" height="1012" alt="The winner on the roof surrounded by confetti and fireworks, with a beam of light marking the skydive pad." loading="lazy">
+        </button>
+        <figcaption>Winning: confetti cannons, fireworks and a light marking the skydive pad.</figcaption>
+      </figure>
+
+      <h2>Players, stats and leaderboards</h2>
+      <p>You can play straight away as a guest, with nothing to sign up for. Behind the scenes that's an anonymous Supabase account, so if you later create an account with email and password, everything you've earned stays with you, and signing in on another device brings it along.</p>
+      <ul>
+        <li><strong>Ten unlockable looks</strong>, earned by playing: reach floor 16, get five knock-outs, escape in under 4:30.</li>
+        <li><strong>Leaderboards</strong> for fastest escape, wins and knock-outs, by day, week and all time.</li>
+        <li><strong>Security on every table.</strong> Players can only read and change their own data. Rounds are reported through a server function that checks them: a win before the roof opens, floors climbed faster than a platform moves or more knock-outs than time allows get flagged and kept off the leaderboards.</li>
+        <li><strong>Privacy built in.</strong> Player names are filtered on the server, including look-alike spellings. One button deletes everything about you. Anonymous analytics can be switched off, and are off from the start if your browser asks not to be tracked.</li>
+      </ul>
+
+      <h2>Shipping</h2>
+      <p>Releases go out from GitHub. Tagging a version starts a GitHub Actions workflow that builds the game, checks it against itch.io's limits, packs it and uploads it with butler. It's live about two minutes later. Rooftop launched on itch.io in October 2026.</p>
+
+      <h2>What's next</h2>
+      <p>Guns with aiming through the crosshair, proper phone controls, and, once players show up, online multiplayer with the game running on a server.</p>
+    </div>
+
+    <section class="next" aria-labelledby="next">
+      <h2 class="section-title" id="next">Next project</h2>
+      <ul class="list">
+        <li>
+          <a class="row" href="/tradica/">
+            <span class="when">2025</span>
+            <span class="what">Tradica</span>
+            <span class="aside">Trading journal</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      <p><span data-clock>–</span> in Addis Ababa, Ethiopia<span class="dot" aria-hidden="true"></span></p>
+    </footer>
+  </main>
+  <script src="/script.js" defer></script>
+</body>
+</html>

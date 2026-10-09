@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tradica · Andualem Mamo</title>
+  <meta name="description" content="Tradica is a trading journal that turns raw trades into a calendar, charts and stats, with voice logging and broker sync.">
+  <meta property="og:title" content="Tradica">
+  <meta property="og:description" content="A trading journal that shows which trades actually make you money.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="/images/tradica/overview.webp">
+  <meta name="theme-color" content="#151515">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main>
+    <a class="back" href="/">Andualem Mamo</a>
+
+    <header class="project-head">
+      <h1>Tradica</h1>
+      <p class="lede">A trading journal that turns raw trades into a calendar, charts and honest stats, so traders can see which setups make them money and which ones quietly cost them.</p>
+    </header>
+
+    <dl class="facts">
+      <div><dt>Year</dt><dd>2025 – now</dd></div>
+      <div><dt>Role</dt><dd>Founder: design and engineering</dd></div>
+      <div><dt>Built with</dt><dd>React, TypeScript, Supabase</dd></div>
+      <div><dt>Website</dt><dd><a href="https://tradica.co" target="_blank" rel="noopener">tradica.co</a></dd></div>
+    </dl>
+
+    <figure class="wide">
+      <button type="button" data-full="/images/tradica/dashboard.webp" aria-label="View the dashboard full size">
+        <img src="/images/tradica/dashboard.webp" width="1800" height="884" alt="The Tradica dashboard: total P&amp;L, win rate gauge, trade count and average win/loss at the top, three performance charts below, and a calendar with green and red trading days next to the trades for the selected day.">
+      </button>
+      <figcaption>The current dashboard, showing a demo month of trades.</figcaption>
+    </figure>
+
+    <div class="prose">
+      <h2>Why I built it</h2>
+      <p>I trade gold on the side, and like most traders I kept my journal in a spreadsheet: rows of entries, a notes column nobody rereads, and no easy way to see patterns. I wanted something that answers simple questions at a glance. Was this a good week? Do I lose money on Mondays? Do my 1:2 setups actually pay?</p>
+      <p>Tradica started in August 2025 as a quick prototype and grew, over about 170 commits, into a full product with accounts, subscriptions and broker sync.</p>
+
+      <h2>The dashboard</h2>
+      <p>The dashboard is built around one idea: the calendar is the journal. Every trading day is a tile coloured green or red with its trade count and P&amp;L. Click a day and the side panel shows its trades, with direction, risk to reward, notes and chart screenshots.</p>
+      <ul>
+        <li><strong>Headline numbers</strong>: total P&amp;L, win rate with wins, break-evens and losses, trade count and average win against average loss.</li>
+        <li><strong>Three charts</strong>: daily P&amp;L bars, a running cumulative P&amp;L line and weekly totals, all following the chosen date range.</li>
+        <li><strong>Demo and real accounts</strong> kept apart, several accounts per user, and every date shown in the trader's own time zone.</li>
+      </ul>
+
+      <h2>Logging a trade</h2>
+      <p>If journaling is slow, people stop doing it, so logging had to take seconds. The trade form fills in what it can calculate and takes several chart screenshots per trade.</p>
+      <p>Then I added voice. You press record and say something like “bought gold this morning, closed at one to two, plus 144”. The recording is transcribed with Whisper, and a Llama 3.3 model running on Groq pulls out the instrument, direction, dates, P&amp;L and risk to reward and fills the form for you to check before saving.</p>
+
+      <figure class="wide">
+        <button type="button" data-full="/images/tradica/overview.webp" aria-label="View the overview full size">
+          <img src="/images/tradica/overview.webp" width="1800" height="1012" alt="Three screens from the first version of Tradica: the calendar month view, the cumulative P&amp;L chart and a trade detail card for a profitable XAUUSD buy with its chart screenshot." loading="lazy">
+        </button>
+        <figcaption>The first version, August 2025: calendar, P&amp;L chart and a single trade's detail.</figcaption>
+      </figure>
+
+      <h2>Broker sync</h2>
+      <p>Typing trades in by hand still leaves room for mistakes, so Tradica can connect to MatchTrader broker accounts with a read-only investor password. Server functions import the trade history, skip anything already imported, show open positions live and keep every connected account in sync on a schedule.</p>
+
+      <h2>Journal, notebooks and reports</h2>
+      <p>Numbers only tell half the story. Each day has its own journal entry with images, there are rich-text notebooks for strategy notes and reviews, and a report page breaks performance down further than the dashboard does.</p>
+
+      <div class="pair">
+        <figure>
+          <button type="button" data-full="/images/tradica/v1-dashboard.webp" aria-label="View the first dashboard full size">
+            <img src="/images/tradica/v1-dashboard.webp" width="1800" height="887" alt="The first Tradica dashboard with four coloured stat cards above a calendar and a list of the day's trades." loading="lazy">
+          </button>
+        </figure>
+        <figure>
+          <button type="button" data-full="/images/tradica/v1-devices.webp" aria-label="View the first version on several screens full size">
+            <img src="/images/tradica/v1-devices.webp" width="1280" height="720" alt="The first version of Tradica on a desktop, a chart panel and a narrow trade list." loading="lazy">
+          </button>
+        </figure>
+      </div>
+      <p>Where it started. The first dashboard used a colour for every number; the redesign moved to one quiet palette where only profit and loss are coloured, so the eye goes straight to what matters.</p>
+
+      <h2>Under the hood</h2>
+      <ul>
+        <li><strong>Front end</strong>: React and TypeScript with Vite, Tailwind CSS and shadcn/ui, Framer Motion for the landing page and TipTap for the notebooks.</li>
+        <li><strong>Back end</strong>: Supabase for auth, Postgres and storage, with 20 migrations and row-level security so traders only ever see their own data.</li>
+        <li><strong>Server functions</strong>: nine Supabase Edge Functions for broker connection and sync, open positions, voice parsing, invoices and subscription checks.</li>
+        <li><strong>Payments</strong>: a free plan and a $6 a month Pro plan, paid in crypto through NOWPayments, with a webhook that turns Pro on and a scheduled check that turns it off when it expires.</li>
+        <li><strong>Hosting</strong>: Netlify.</li>
+      </ul>
+
+      <h2>What I learned</h2>
+      <p>Most of the work wasn't the charts, it was trust: making imports never create duplicates, getting time zones right so a trade lands on the right day, and making account deletion actually delete. Those are the details traders never notice when they work, and stop using the product over when they don't.</p>
+    </div>
+
+    <section class="next" aria-labelledby="next">
+      <h2 class="section-title" id="next">Next project</h2>
+      <ul class="list">
+        <li>
+          <a class="row" href="/rooftop/">
+            <span class="when">2026</span>
+            <span class="what">Rooftop</span>
+            <span class="aside">Browser game</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      <p><span data-clock>–</span> in Addis Ababa, Ethiopia<span class="dot" aria-hidden="true"></span></p>
+    </footer>
+  </main>
+  <script src="/script.js" defer></script>
+</body>
+</html>
