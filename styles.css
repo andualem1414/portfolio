@@ -1,12 +1,18 @@
 :root {
-  --bg: #151515;
-  --text: #ececec;
-  --muted: #8b8b8b;
-  --faint: #5d5d5d;
-  --rule: #262626;
-  --underline: #4d4d4d;
+  --bg: #1c2249;
+  --night: #141838;
+  --text: #f4ead3;
+  --soft: #e3d8bf;
+  --muted: #b9b2cf;
+  --faint: #8a86ad;
+  --rule: rgba(244, 234, 211, 0.16);
+  --underline: rgba(242, 181, 74, 0.5);
+  --amber: #f2b54a;
+  --gold: #d9a441;
+  --teal: #3fa3b0;
   --column: 560px;
   --wide: 880px;
+  --serif: "Fraunces", ui-serif, Georgia, serif;
   color-scheme: dark;
 }
 
@@ -19,10 +25,17 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  background: var(--night);
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text);
   font-family: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -35,14 +48,60 @@ body {
 }
 
 ::selection {
-  background: #ececec;
-  color: #151515;
+  background: var(--amber);
+  color: var(--night);
+}
+
+/* Night sky, string lights and the desk */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg) url("/images/decor/sky.svg") center / cover no-repeat;
+}
+
+.lights {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 170px;
+  background: url("/images/decor/lights.svg") center top / auto 170px repeat-x;
+  pointer-events: none;
+}
+
+.desk {
+  position: relative;
+  height: 230px;
+  margin-top: auto;
+  background:
+    url("/images/decor/mug.svg") calc(50% - 330px) 40px / 96px auto no-repeat,
+    url("/images/decor/boat.svg") calc(50% - 170px) 120px / 100px auto no-repeat,
+    url("/images/decor/pencil.svg") calc(50% + 70px) 158px / 190px auto no-repeat,
+    url("/images/decor/candle.svg") calc(50% + 340px) 32px / 150px auto no-repeat,
+    radial-gradient(ellipse 340px 120px at calc(50% + 340px) 70px, rgba(255, 190, 90, 0.16), transparent 70%),
+    linear-gradient(rgba(10, 6, 4, 0.55), transparent 22px),
+    url("/images/decor/wood.svg") center / 100% 100% no-repeat,
+    #3a2118;
+  pointer-events: none;
+}
+
+.desk::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  border-top: 1px solid rgba(255, 214, 160, 0.22);
 }
 
 main {
+  width: 100%;
   max-width: calc(var(--column) + 48px);
   margin: 0 auto;
-  padding: 88px 24px 96px;
+  padding: 150px 24px 72px;
 }
 
 p {
@@ -53,18 +112,20 @@ a {
   color: inherit;
   text-decoration: underline;
   text-decoration-color: var(--underline);
+  text-decoration-style: dashed;
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: text-decoration-color 0.15s ease;
+  text-underline-offset: 4px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
 a:hover {
-  text-decoration-color: var(--text);
+  color: var(--amber);
+  text-decoration-color: var(--amber);
 }
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--text);
+  outline: 2px solid var(--amber);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -77,15 +138,23 @@ button:focus-visible {
 
 .intro h1,
 .intro .name {
-  font-size: inherit;
+  font-family: var(--serif);
+  font-size: 30px;
+  line-height: 1.2;
   font-weight: 500;
-  margin: 0;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
   color: var(--text);
 }
 
 .intro .sub {
-  color: var(--muted);
+  color: var(--amber);
   margin: 0;
+}
+
+.bio p {
+  color: var(--soft);
 }
 
 .back {
@@ -93,8 +162,13 @@ button:focus-visible {
   text-decoration: none;
 }
 
+.back::before {
+  content: "\2190";
+  margin-right: 8px;
+}
+
 .back:hover {
-  color: var(--text);
+  color: var(--amber);
 }
 
 /* Lists */
@@ -104,17 +178,32 @@ section {
 }
 
 .section-title {
-  font-size: inherit;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-style: italic;
   font-weight: 400;
-  color: var(--muted);
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  color: var(--amber);
   margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 6px 2px rgba(242, 181, 74, 0.45), 0 0 18px 4px rgba(242, 181, 74, 0.18);
 }
 
 .list {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--rule);
+  border-top: 1px dashed var(--rule);
 }
 
 .row {
@@ -122,7 +211,7 @@ section {
   grid-template-columns: 108px 1fr auto;
   gap: 16px;
   align-items: baseline;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px dashed var(--rule);
 }
 
 .row > * {
@@ -130,7 +219,7 @@ section {
 }
 
 .row .when {
-  color: var(--muted);
+  color: var(--faint);
   font-variant-numeric: tabular-nums;
 }
 
@@ -155,11 +244,33 @@ section {
 }
 
 a.row {
+  position: relative;
   text-decoration: none;
 }
 
+a.row::before {
+  content: "";
+  position: absolute;
+  inset: 0 -12px;
+  z-index: -1;
+  border-radius: 6px;
+  background: linear-gradient(90deg, rgba(242, 181, 74, 0.12), rgba(242, 181, 74, 0.02));
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+a.row:hover,
+a.row:focus-visible {
+  color: inherit;
+}
+
+a.row:hover::before,
+a.row:focus-visible::before {
+  opacity: 1;
+}
+
 a.row .what {
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, text-shadow 0.2s ease;
 }
 
 .list:hover a.row .what {
@@ -168,7 +279,8 @@ a.row .what {
 
 .list a.row:hover .what,
 .list a.row:focus-visible .what {
-  color: var(--text);
+  color: var(--amber);
+  text-shadow: 0 0 14px rgba(242, 181, 74, 0.45);
 }
 
 a.row .what::after {
@@ -210,7 +322,7 @@ footer::before {
   top: 0;
   left: 0;
   width: 48px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px dashed var(--rule);
 }
 
 footer p {
@@ -222,30 +334,33 @@ footer .dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #4f9d6a;
+  background: var(--amber);
   margin-left: 8px;
   transform: translateY(-1px);
-  box-shadow: 0 0 0 0 rgba(79, 157, 106, 0.5);
-  animation: pulse 2.4s ease-out infinite;
+  box-shadow: 0 0 6px 2px rgba(242, 181, 74, 0.5);
+  animation: flicker 2.6s ease-in-out infinite;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(79, 157, 106, 0.45); }
-  70%, 100% { box-shadow: 0 0 0 7px rgba(79, 157, 106, 0); }
+@keyframes flicker {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px 2px rgba(242, 181, 74, 0.5); }
+  35% { opacity: 0.75; box-shadow: 0 0 4px 1px rgba(242, 181, 74, 0.35); }
+  60% { opacity: 0.95; box-shadow: 0 0 9px 3px rgba(242, 181, 74, 0.55); }
 }
 
 /* Project pages */
 
 .project-head h1 {
-  font-size: 22px;
-  line-height: 1.3;
+  font-family: var(--serif);
+  font-size: 34px;
+  line-height: 1.2;
   font-weight: 500;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
   letter-spacing: -0.01em;
   margin: 28px 0 6px;
 }
 
 .project-head .lede {
-  color: var(--muted);
+  color: var(--soft);
   margin: 0;
 }
 
@@ -255,8 +370,8 @@ footer .dot {
   gap: 16px;
   margin: 32px 0 0;
   padding: 16px 0;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
+  border-top: 1px dashed var(--rule);
+  border-bottom: 1px dashed var(--rule);
 }
 
 .facts div {
@@ -264,7 +379,7 @@ footer .dot {
 }
 
 .facts dt {
-  color: var(--faint);
+  color: var(--amber);
   margin: 0 0 2px;
 }
 
@@ -282,29 +397,58 @@ figure.wide {
   margin-right: calc((var(--column) - min(var(--wide), 100vw - 48px)) / 2);
 }
 
+/* Images sit in a little glass case with brass corners */
+
 figure button {
+  --c: 14px;
+  position: relative;
   display: block;
   width: 100%;
   padding: 0;
   border: 0;
   background: none;
   cursor: zoom-in;
-  border-radius: 10px;
+  border-radius: 6px;
+}
+
+figure button::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(244, 234, 211, 0.22);
+  border-radius: 2px;
+  background:
+    linear-gradient(var(--gold), var(--gold)) top left / var(--c) 3px,
+    linear-gradient(var(--gold), var(--gold)) top left / 3px var(--c),
+    linear-gradient(var(--gold), var(--gold)) top right / var(--c) 3px,
+    linear-gradient(var(--gold), var(--gold)) top right / 3px var(--c),
+    linear-gradient(var(--gold), var(--gold)) bottom left / var(--c) 3px,
+    linear-gradient(var(--gold), var(--gold)) bottom left / 3px var(--c),
+    linear-gradient(var(--gold), var(--gold)) bottom right / var(--c) 3px,
+    linear-gradient(var(--gold), var(--gold)) bottom right / 3px var(--c);
+  background-repeat: no-repeat;
+  pointer-events: none;
+  transition: border-color 0.2s ease;
+}
+
+figure button:hover::after {
+  border-color: rgba(242, 181, 74, 0.5);
 }
 
 figure img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 10px;
-  background: #1c1c1c;
-  outline: 1px solid rgba(255, 255, 255, 0.06);
-  outline-offset: -1px;
+  border-radius: 3px;
+  background: var(--night);
+  box-shadow: 0 18px 40px -18px rgba(5, 6, 20, 0.8);
 }
 
 figcaption {
-  color: var(--faint);
-  margin-top: 10px;
+  color: var(--muted);
+  font-family: var(--serif);
+  font-style: italic;
+  margin-top: 16px;
   max-width: var(--column);
   margin-left: auto;
   margin-right: auto;
@@ -313,7 +457,7 @@ figcaption {
 .pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 24px;
   margin: 40px 0;
 }
 
@@ -327,25 +471,28 @@ figcaption {
 }
 
 .prose .pair + p {
-  color: var(--faint);
+  color: var(--muted);
   margin-top: -28px;
 }
 
 .prose h2 {
-  font-size: inherit;
+  font-family: var(--serif);
+  font-size: 20px;
   font-weight: 500;
-  margin: 44px 0 8px;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  color: var(--text);
+  margin: 48px 0 8px;
 }
 
 .prose p {
-  color: #cfcfcf;
+  color: var(--soft);
 }
 
 .prose ul {
   margin: 0 0 14px;
   padding: 0;
   list-style: none;
-  color: #cfcfcf;
+  color: var(--soft);
 }
 
 .prose li {
@@ -357,10 +504,13 @@ figcaption {
 .prose li::before {
   content: "";
   position: absolute;
-  left: 2px;
-  top: 0.8em;
-  width: 7px;
-  border-top: 1px solid var(--faint);
+  left: 3px;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 5px 1px rgba(242, 181, 74, 0.4);
 }
 
 .prose strong {
@@ -385,7 +535,7 @@ figcaption {
 }
 
 .lightbox::backdrop {
-  background: rgba(10, 10, 10, 0.92);
+  background: rgba(12, 14, 34, 0.94);
 }
 
 .lightbox img {
@@ -429,7 +579,33 @@ main {
 
 @media (max-width: 640px) {
   main {
-    padding: 56px 20px 72px;
+    padding: 120px 20px 56px;
+  }
+
+  .lights {
+    height: 130px;
+    background-size: auto 130px;
+  }
+
+  .intro h1,
+  .intro .name {
+    font-size: 26px;
+  }
+
+  .project-head h1 {
+    font-size: 28px;
+  }
+
+  .desk {
+    height: 180px;
+    background:
+      url("/images/decor/mug.svg") calc(50% - 120px) 30px / 72px auto no-repeat,
+      url("/images/decor/boat.svg") calc(50% - 10px) 108px / 70px auto no-repeat,
+      url("/images/decor/candle.svg") calc(50% + 120px) 26px / 112px auto no-repeat,
+      radial-gradient(ellipse 200px 90px at calc(50% + 120px) 55px, rgba(255, 190, 90, 0.16), transparent 70%),
+      linear-gradient(rgba(10, 6, 4, 0.55), transparent 18px),
+      url("/images/decor/wood.svg") center / 100% 100% no-repeat,
+      #3a2118;
   }
 
   .row {

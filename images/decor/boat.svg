@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 90">
+  <defs><filter id="r"><feTurbulence type="fractalNoise" baseFrequency=".07" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter></defs>
+  <ellipse cx="66" cy="82" rx="54" ry="5" fill="#140a06" opacity=".45"/>
+  <g filter="url(#r)" stroke-linejoin="round">
+    <path d="M8 52 L122 52 L102 80 L28 80 Z" fill="#e8e0cd"/>
+    <path d="M65 8 L40 52 L90 52 Z" fill="#f4eedf"/>
+    <path d="M65 8 L90 52 L104 52 Z" fill="#cfc6b0"/>
+    <path d="M65 8 L40 52 L26 52 Z" fill="#d8cfba"/>
+    <path d="M8 52 L40 52 L28 80 Z" fill="#d3cab4"/>
+    <path d="M122 52 L90 52 L102 80 Z" fill="#c5bba3"/>
+    <path d="M8 52 L122 52 L102 80 L28 80 Z M65 8 L26 52 M65 8 L104 52 M40 52 L65 8 L90 52" fill="none" stroke="#fffaf0" stroke-width="1.1" stroke-dasharray="4 2.5"/>
+    <path d="M30 64 L100 64" stroke="#b5ab94" stroke-width=".8" opacity=".6"/>
+  </g>
+</svg>
