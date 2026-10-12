@@ -83,7 +83,7 @@ body::before {
     url("/images/decor/candle.svg") calc(50% + 340px) 32px / 150px auto no-repeat,
     radial-gradient(ellipse 340px 120px at calc(50% + 340px) 70px, rgba(255, 190, 90, 0.16), transparent 70%),
     linear-gradient(rgba(10, 6, 4, 0.55), transparent 22px),
-    url("/images/decor/wood.svg") center / 100% 100% no-repeat,
+    url("/images/decor/wood.svg") center top / cover no-repeat,
     #3a2118;
   pointer-events: none;
 }
@@ -604,7 +604,7 @@ main {
       url("/images/decor/candle.svg") calc(50% + 120px) 26px / 112px auto no-repeat,
       radial-gradient(ellipse 200px 90px at calc(50% + 120px) 55px, rgba(255, 190, 90, 0.16), transparent 70%),
       linear-gradient(rgba(10, 6, 4, 0.55), transparent 18px),
-      url("/images/decor/wood.svg") center / 100% 100% no-repeat,
+      url("/images/decor/wood.svg") center top / cover no-repeat,
       #3a2118;
   }
 
